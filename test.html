@@ -1,0 +1,133 @@
+<script type="importmap">
+    {
+      "imports": {
+        "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+      }
+    }
+  </script>
+  
+  <div id="app">
+    <div>
+        <h1>B+</h1>
+        <div class="original">
+            <ul class="list">
+                <li v-for="(item, index) in bplusList" :key="item.code" class="item">
+                    <p><span class="sort">{{index + 1 + '  '}}</span><span class="name" :class="[bplus_invalidDataForMath.includes(item.code) ? 'red' : !item.validate ? 'orange' : '']">{{item.name}}</span></p>
+                    <p v-if="!item.validate">专业课: {{item.subjects}}</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <h1>B+</h1>
+        <div class="original">
+            <ul class="list">
+                <li v-for="(item, index) in bplusList" :key="item.code" class="item">
+                    <p><span class="sort">{{index + 1 + '  '}}</span><span class="name" :class="[bplus_invalidDataForMath.includes(item.code) ? 'red' : !item.validate ? 'orange' : '']">{{item.name}}</span></p>
+                    <p v-if="!item.validate">专业课: {{item.subjects}}</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <h1>B</h1>
+        <div class="original">
+            <ul class="list">
+                <li v-for="(item, index) in bList" :key="item.code" class="item">
+                    <p><span class="sort">{{index + 1 + '  '}}</span><span class="name" :class="[b_invalidDataForMath.includes(item.code) ? 'red' : !item.validate ? 'orange' : '']">{{item.name}}</span></p>
+                    <p v-if="!item.validate">专业课: {{item.subjects}}</p>
+                    
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <h1>B-</h1>
+        <div class="original">
+            <ul class="list">
+                <li v-for="(item, index) in bminList" :key="item.code" class="item">
+                    <div v-if="!item.noName">
+                        <p><span class="sort">{{index + 1 + '  '}}</span><span class="name" :class="[bmin_invalidDataForMath.length && bmin_invalidDataForMath.includes(item.code) ? 'red' : !item.validate ? 'orange' : '']">{{item.name}}</span></p>
+                        <p v-if="!item.validate">专业课: {{item.subjects}}</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+  </div>
+  <!-- 引入B+ 数据 -->
+  <script src="./zoneB/b+.js"></script>
+  <script src="./zoneB/b.js"></script>
+  <script src="./zoneB/b-.js"></script>
+  <script type="module">
+    import { createApp } from 'vue'
+
+    // 整理list数据
+    createApp({
+      data() {
+        return {
+          message: 'Hello Vue!',
+          bplusList: bplus_data,
+          bList: b_data,
+          bminList: bmin_data
+        }
+      },
+      computed: {
+        bplus_invalidDataForMath () {
+            let list = this.bplusList.filter(value=>(value.subjects && value.subjects && value.subjects.includes(301)))
+            return list&&list.length&&list.map(value=>value.code)
+        },
+        bplus_no408 () {
+            return this.bplusList.filter(value=>!value.validate)
+        },
+        b_invalidDataForMath () {
+            let list = this.bList.filter(value=>(value.subjects && value.subjects && value.subjects.includes(301)))
+            return list&&list.length&&list.map(value=>value.code)
+        },
+        b_no408 () {
+            return this.bList.filter(value=>!value.validate)
+        },
+        bmin_invalidDataForMath () {
+            let list = this.bminList.filter(value=>(value.subjects && value.subjects && value.subjects.includes(301)))
+            console.log('list:', list)
+            return list&&list.length&&list.map(value=>value.code)
+        },
+        bmin_no408 () {
+            return this.bminList.filter(value=>!value.validate)
+        },
+      },
+      created () {
+        
+      }
+    }).mount('#app')
+  </script>
+  <style>
+    .list {
+        list-style: none;
+    }
+    .item {
+        font-size: 20px;
+        
+        
+    }
+    .item p {
+        height: 45px;
+        line-height: 45px;
+    }
+    .sort {
+
+    }
+    .name {
+        font-weight: bold;
+    }
+    .red {
+        color: rgb(213, 38, 38);
+    }
+    .orange {
+        color: #141642;
+    }
+    .desc {
+        margin-top: 40px;
+        padding-left: 30px;
+    }
+  </style>
